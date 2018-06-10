@@ -1,0 +1,8 @@
+<% unless flash.empty? %>
+  <script type="text/javascript">
+    <% flash.each do |msg| %>
+      <% type = msg[0].to_s.gsub('alert', 'error').gsub('notice', 'info') %>
+      toastr['<%= type %>']('<%= msg[1] %>');
+    <% end %>
+  </script>
+<% end %>
