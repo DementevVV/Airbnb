@@ -1,2 +1,21 @@
-<h1>Rooms#show</h1>
-<p>Find me in app/views/rooms/show.html.erb</p>
+
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap, 
+            myPlacemark;
+
+        function init(){ 
+            myMap = new ymaps.Map("map", {
+                center: [<%= @room.latitude %>, <%= @room.longitude %>],
+                zoom: 15
+            }); 
+            
+            myPlacemark = new ymaps.Placemark([<%= @room.latitude %>, <%= @room.longitude %>], {
+                hintContent: 'Airbnb',
+                balloonContent: '<%= @room.address%>'
+            });
+            
+            myMap.geoObjects.add(myPlacemark);
+        }
+    </script>
+<div id="map" style="width: 600px; height: 400px"></div>

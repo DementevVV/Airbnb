@@ -63,6 +63,7 @@ GEM
     eventmachine (1.2.7)
     execjs (2.7.0)
     ffi (1.9.25)
+    geocoder (1.4.9)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
     i18n (0.9.5)
@@ -189,6 +190,7 @@ DEPENDENCIES
   byebug
   coffee-rails (~> 4.1.0)
   devise
+  geocoder
   jbuilder (~> 2.0)
   jquery-rails
   paperclip
@@ -204,4 +206,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
