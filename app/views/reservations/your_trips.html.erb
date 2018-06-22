@@ -1,0 +1,9 @@
+<% @trips.each do |trip| %>
+  <%= trip.start_date.strftime('%v') %>
+  <%= link_to room_path(trip.room) do %>
+    <%= image_tag trip.room.photos[0].image.url(:thumb) %>
+  <% end %>
+    
+  <%#= image_tag avatar_url(trip.room.user) %>
+  <%= trip.total %>
+<% end %>
