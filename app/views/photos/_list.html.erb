@@ -3,6 +3,9 @@
         <% @photos.each do |photo| %>
             <div>
                 <%= image_tag photo.image.url(:original) %>
+                <%= link_to photo, remote: true, method: :delete, data: { confirm: "Are you sure?" } do %>
+                    Destroy
+                <% end %>
             </div>
         <% end %>
     </div>    
