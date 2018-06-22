@@ -1,0 +1,9 @@
+<% if @photos %>
+    <div>
+        <% @photos.each do |photo| %>
+            <div>
+                <%= image_tag photo.image.url(:original) %>
+            </div>
+        <% end %>
+    </div>    
+<% end %>

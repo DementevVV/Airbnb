@@ -1,4 +1,4 @@
-<%= form_for @room do |f| %>
+<%= form_for @room, html: { multipart: true } do |f| %>
   <div>
     <label>Home type</label>
     <%= f.select :home_type, [["Apartment", "Apartment"], ["House", "House"],
@@ -54,6 +54,12 @@
   <div>
     <label>Nightly price</label>
     <%= f.text_field :price, placeholder: "eg. $100" %>
+  </div>
+  <div>
+    <%= file_field_tag "images[]", type: :file, multiple: true %>    
+  </div>
+  <div id="photos">
+    <%= render 'photos/list' %>
   </div>
   <div>
     <%= f.check_box :active %> Active
