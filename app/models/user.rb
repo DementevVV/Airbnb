@@ -5,5 +5,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   validates :full_name, presence: true, length: { maximum: 50 }
   has_many :rooms
+  has_many :reservations
 
 end

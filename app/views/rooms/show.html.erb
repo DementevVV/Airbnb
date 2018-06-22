@@ -19,3 +19,12 @@
         }
     </script>
 <div id="map" style="width: 600px; height: 400px"></div>
+
+<div>
+    Near by
+    <% for room in @room.nearbys(10) %>
+        <%#= image_tag room.photos[0].image.url(:medium) %>
+        <%= link_to room.listing_name, room %> <br>
+        (<%= room.distance.round(2)%> km away )
+    <% end %>
+</div>
