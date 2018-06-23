@@ -1,0 +1,16 @@
+<div>
+  Your reservations
+</div>
+<div>
+  <% @rooms.each do |room| %>
+    <% room.reservations.each do |reservation| %>
+      <%= reservation.start_date.strftime('%v') %>
+      <%= link_to room_path(reservation.room) do %>
+        <%= image_tag reservation.room.photos[0].image.url(:thumb) %>
+      <% end %>
+      <%#= link_to user_path(reservation.user) do %>
+        <%#= image_tag avatar_url(reservation.user) %>
+      <%# end %>
+    <% end %>
+  <% end %>
+</div>
