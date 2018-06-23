@@ -18,3 +18,5 @@
 <div id="chat">
   <%= render @messages, locals: { conversation: @conversation } %>
 </div>
+
+<%= subscribe_to conversation_messages_path(@conversation) %>
