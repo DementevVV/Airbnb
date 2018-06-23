@@ -1,0 +1,20 @@
+<div>
+  <strong><%= @other.full_name %></strong>
+  <%= link_to 'View Profile', @other %>
+</div>
+
+<div>
+  Conversation with <%= @other.full_name %>
+  <div>
+    <%= form_for [@conversation, @conversation.messages.new] do |f| %>
+      <%= f.text_area :content, placeholder: "Add a personal message", id: "new_message" %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <br>
+      <%= f.submit "Send Message" %>
+    <% end %>
+  </div>
+</div>
+
+<div id="chat">
+  <%= render 'messages' %>
+</div>

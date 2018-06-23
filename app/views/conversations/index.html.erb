@@ -1,0 +1,37 @@
+<div>
+  <div>
+    Your conversations
+  </div>
+
+  <% @conversations.each do |conversation| %>
+    <% @other = conversation.sender == current_user ? conversation.recipient : conversation.sender %>
+
+    <%= link_to conversation_messages_path(conversation) do %>
+      <div class="conversation">
+        <div>
+          <%#= image_tag avatar_url(other) %>
+        </div>
+        <div>
+          <%= @other.full_name %> <br>
+          <%= conversation.messages.last.message_time %>
+        </div>
+        <div>
+          <%= conversation.messages.last.content %>
+        </div>
+      </div>
+    <% end %>
+    
+  <% end %>
+</div>
+
+<div>
+  All Users
+  <% @users.each do |user| %>
+    <% if user != current_user %>
+      <%= user.full_name %>
+      <%= link_to 'Send Message', conversations_path(sender_id: current_user.id, recipient_id: user.id),
+          method: 'post' %>
+    <% end %>
+  <% end %>
+  
+</div>
