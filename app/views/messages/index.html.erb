@@ -6,8 +6,8 @@
 <div>
   Conversation with <%= @other.full_name %>
   <div>
-    <%= form_for [@conversation, @conversation.messages.new] do |f| %>
-      <%= f.text_area :content, placeholder: "Add a personal message", id: "new_message" %>
+    <%= form_for [@conversation, @conversation.messages.new], remote: true do |f| %>
+      <%= f.text_area :content, placeholder: "Add a personal message" %>
       <%= f.hidden_field :user_id, value: current_user.id %>
       <br>
       <%= f.submit "Send Message" %>
@@ -16,5 +16,5 @@
 </div>
 
 <div id="chat">
-  <%= render 'messages' %>
+  <%= render @messages, locals: { conversation: @conversation } %>
 </div>
