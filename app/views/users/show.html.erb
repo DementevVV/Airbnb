@@ -11,3 +11,17 @@
     <%= link_to room.listing_name, room_path(room) %>
   <% end %>
 </div>
+
+<div>
+  <h4>Reviews</h4>
+  <% @rooms.each do |room| %>
+    <% if !room.reviews.blank? %>
+      <% room.reviews.each do |review| %>
+        <%= review.user.full_name %>
+        <%= link_to room.listing_name, room %>
+        <%= review.comment %>
+        <%= review.created_at.strftime("%v") %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
