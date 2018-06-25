@@ -1,2 +1,35 @@
-<h1>Flow#home</h1>
-<p>Find me in app/views/flow/home.html.erb</p>
+<%= form_tag search_path, method: :get do %>
+  <%= text_field_tag :search, params[:search], placeholder: "What are you goind?" %>
+  <%= text_field_tag :start_date, params[:start_date], placeholder: "Start Date" %>
+  <%= text_field_tag :end_date, params[:end_date], placeholder: "End Date" %>
+  <%= submit_tag "Search" %>
+
+<% end %>
+
+<% @rooms.each do |room| %>
+  <%= image_tag room.photos[0].image.url(:medium) if room.photos.length > 0 %>
+  <%= link_to room.listing_name, room %>  
+<% end %>
+
+<script>
+	$(function() {
+		$("#start_date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0,
+			maxDate: '3m',
+			onSelect: function(selected) {
+				$('#end_date').datepicker("option", "minDate", selected);
+				$('#end_date').attr('disabled', false);
+			}
+		});
+
+		$("#end_date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0,
+			maxDate: '3m',
+			onSelect: function(selected) {
+				$('#start_date').datepicker("option", "maxDate", selected);
+			}
+		});
+	})
+</script>

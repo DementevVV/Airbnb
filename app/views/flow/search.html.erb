@@ -1,0 +1,107 @@
+<div>
+  <%= search_form_for @search, url: search_path do |f| %>
+    <%= text_field_tag :start_date, params[:start_date], placeholder: "Start Date" %>
+    <%= text_field_tag :end_date, params[:end_date], placeholder: "End Date" %>
+    <%= f.text_field :price_gteq, placeholder: "Min Price" %>
+    <%= f.text_field :price_lteq, placeholder: "Max Price" %>
+    <%= check_box_tag "q[room_type_eq_any[]", "Entire" %> Entire Room
+    <%= check_box_tag "q[room_type_eq_any[]", "Private" %> Private Room
+    <%= check_box_tag "q[room_type_eq_any[]", "Shared" %> Shared Room
+    <div>
+      <label>Accommodate</label>
+      <%= f.select :accommodate_gteq, [["1", 1], ["2", 2], ["3", 3], ["4", 4], ["5", 5], ["6+", 6]] %>
+    </div>
+    <div>
+      <label>Bedrooms</label>
+      <%= f.select :bed_room_gteq, [["1", 1], ["2", 2], ["3", 3], ["4+", 4]] %>
+    </div>
+    <div>
+      <label>Bathrooms</label>
+      <%= f.select :bath_room_gteq, [["1", 1], ["2", 2]] %>
+    </div>
+    <div>
+      <%= check_box_tag "q[is_tv_eq]", true %> TV
+      <%= check_box_tag "q[is_kitchen_eq]", true %> Kitchen
+      <%= check_box_tag "q[is_internet_eq]", true %> Internet
+      <%= check_box_tag "q[is_air_eq]", true %> Ait
+      <%= check_box_tag "q[is_heating_eq]", true %> Heating
+    </div>
+    <div>
+      <%= f.submit "Search" %>
+    </div>
+  <% end %>
+</div>
+<div>
+  <% @arrRooms.each do |room| %>
+						
+						<div class="col-md-6">
+							<div class="panel panel-default">
+								<div class="panel-heading preview">
+									<%= image_tag room.photos[0].image.url(:medium) if room.photos.length > 0 %>
+								</div>
+								<div class="panel-body">
+									<%= link_to room.listing_name, room %>
+								</div>
+							</div>
+						</div>
+
+					<% end %>
+</div>
+
+<script>
+	$(function() {
+		$("#start_date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0,
+			maxDate: '3m',
+			onSelect: function(selected) {
+				$('#end_date').datepicker("option", "minDate", selected);
+				$('#end_date').attr('disabled', false);
+			}
+		});
+
+		$("#end_date").datepicker({
+			dateFormat: 'dd-mm-yy',
+			minDate: 0,
+			maxDate: '3m',
+			onSelect: function(selected) {
+				$('#start_date').datepicker("option", "maxDate", selected);
+			}
+		});
+	})
+</script>
+
+<script type="text/javascript">
+    ymaps.ready(init);
+    var myMap, 
+        myPlacemark;
+
+    function init(){ 
+        myMap = new ymaps.Map("map", {
+            <% if @arrRooms.length > 0 %>
+              center: [<%= @arrRooms[0].latitude %>, <%= @arrRooms[0].longitude %>],
+            <% else %>
+              center: [55.76, 37.64],
+            <% end %>
+            zoom: 15
+        });
+        
+        <% if @arrRooms.blank? %>
+          myPlacemark = new ymaps.Placemark([55.76, 37.64], {
+            hintContent: 'Москва!',
+            balloonContent: 'Столица России'
+          });
+          myMap.geoObjects.add(myPlacemark);
+        <% else %>
+        
+        <% @arrRooms.each do |room| %>
+          myPlacemark = new ymaps.Placemark([<%= room.latitude %>, <%= room.longitude %>], {
+              hintContent: 'Airbnb',
+              balloonContent: '<%= room.address%>'
+          });
+          myMap.geoObjects.add(myPlacemark);
+        <% end %>
+      <% end %>    
+    }
+</script>
+<div id="map" style="width: 600px; height: 400px"></div>
