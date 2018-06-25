@@ -1,0 +1,28 @@
+
+<% if @reviews.blank? %>
+  <h4>There is no Review yet</h4>
+<% else %>
+  <% @reviews.order("id desc").each do |r| %>
+    <hr>
+    <div>
+      <%#= image_tag avatar_url(r.user) %>
+      <strong>
+      <%= r.user.full_name %> 
+      <div id="stars_<%= r.id %>"></div>
+      </strong>
+      <span>
+        <%= link_to 'Remove my review', [@room, r], method: :delete, data: { confirm: "Are you sure?" } if current_user && current_user == r.user %>
+      </span>
+      <div><%= r.created_at.strftime("%v") %></div>
+      <div><%= r.comment %></div>
+    </div>
+    <script>
+      $('#stars_<%= r.id %>').raty({
+        path: '/assets',
+        readOnly: true,
+        score: <%= r.star %>
+      });
+    </script>
+  <% end %>
+<% end %>
+

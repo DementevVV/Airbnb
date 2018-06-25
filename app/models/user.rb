@@ -6,5 +6,6 @@ class User < ActiveRecord::Base
   validates :full_name, presence: true, length: { maximum: 50 }
   has_many :rooms
   has_many :reservations
+  has_many :reviews
 
 end

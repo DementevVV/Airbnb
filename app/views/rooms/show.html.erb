@@ -1,4 +1,10 @@
-
+<h3>Reviews <span id="average_rating"></span> (<%= @reviews.count%>)</h3>
+<div>
+  <%= render 'reviews/form' if @booked && !@hasReview %>
+</div>
+<div>
+  <%= render 'reviews/list' %>
+</div>
 <%= render 'reservations/form' %>
 <script type="text/javascript">
     ymaps.ready(init);
@@ -21,11 +27,23 @@
 </script>
 <div id="map" style="width: 600px; height: 400px"></div>
 
+
+<% if @room.nearbys(10).nil? %>
+<% else %>
 <div>
     Near by
-    <% for room in @room.nearbys(10) %>
+    <% for room in @room.nearbys(10)  %>
         <%#= image_tag room.photos[0].image.url(:medium) %>
         <%= link_to room.listing_name, room %> <br>
         (<%= room.distance.round(2)%> km away )
     <% end %>
 </div>
+<% end %>
+
+<script>
+  $('#average_rating').raty({
+    path: '/assets',
+    readOnly: true,
+    score: <%= @room.average_rating %>
+  });
+</script>
